@@ -11,5 +11,6 @@
     <orderEntry type="library" name="selenium-server-standalone-3.9.1" level="project" />
     <orderEntry type="library" name="selenium-3.9.1-nodeps-sources" level="project" />
     <orderEntry type="library" name="selenium-server-4.19.1 (2)" level="project" />
+    <orderEntry type="library" name="selenium-firefox-driver-4.19.1-sources" level="project" />
   </component>
 </module>
