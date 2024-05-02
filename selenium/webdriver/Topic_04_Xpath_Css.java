@@ -142,6 +142,13 @@ public class Topic_04_Xpath_Css {
         driver.findElement(By.id("txtPhone")).sendKeys("12445");
         driver.findElement(By.xpath("//button[text()='ĐĂNG KÝ' and @type='submit']")).click();
 
+        //input data: invalid phone number
+        driver.findElement(By.xpath("txtPhone")).sendKeys("abcd");
+
+        // verify format number
+         Assert.assertEquals(driver.findElement(By.id("txtPhone-error")).getText(),"Vui lòng nhập con số");
+
+
         // verify
 
         Assert.assertEquals(driver.findElement(By.id("txtPhone-error")).getText(),"Số điện thoại bắt đầu bằng: 09 - 03 - 012 - 016 - 018 - 019 - 088 - 03 - 05 - 07 - 08");
@@ -156,6 +163,8 @@ public class Topic_04_Xpath_Css {
         driver.findElement(By.xpath("//button[text()='ĐĂNG KÝ' and @type='submit']")).click();
         // verify
         Assert.assertEquals(driver.findElement(By.id("txtPhone-error")).getText(),"Số điện thoại phải từ 10-11 số.");
+
+
 
     }
 }

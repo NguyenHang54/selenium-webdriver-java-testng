@@ -8,12 +8,13 @@ import org.testng.annotations.Test;
 
 import java.util.concurrent.TimeUnit;
 
-public class Topic_01_Check_Environment {
+public class Topic_05_Run_More_Browser {
     WebDriver driver;
 
     @Test
     public void TC_01_Run_On_Firefox() {
         driver = new FirefoxDriver();
+        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.get("https://www.facebook.com/");
         driver.quit();
     }
@@ -21,13 +22,15 @@ public class Topic_01_Check_Environment {
     @Test
     public void TC_02_Run_On_Chrome() {
         driver = new ChromeDriver();
+        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.get("https://www.facebook.com/");
         driver.quit();
     }
 
     @Test
-    public void TC_03_Run_On_Edge() {
+    public void TC_03_Run_On_Safari() {
         driver = new EdgeDriver();
+        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.get("https://www.facebook.com/");
         driver.quit();
     }
