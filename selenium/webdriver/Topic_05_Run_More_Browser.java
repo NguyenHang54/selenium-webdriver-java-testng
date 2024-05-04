@@ -4,12 +4,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.safari.SafariDriver;
 import org.testng.annotations.Test;
 
 import java.util.concurrent.TimeUnit;
 
 public class Topic_05_Run_More_Browser {
     WebDriver driver;
+    String osName= System.getProperty("os.Name");
 
     @Test
     public void TC_01_Run_On_Firefox() {
@@ -26,9 +28,20 @@ public class Topic_05_Run_More_Browser {
         driver.get("https://www.facebook.com/");
         driver.quit();
     }
-
+// error when running on Safari osName Null??
     @Test
     public void TC_03_Run_On_Safari() {
+        if(osName.contains("mac")){
+            driver =new SafariDriver();
+            driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+            driver.get("https://www.facebook.com/");
+            driver.quit();
+        }
+
+        driver.quit();
+    }
+    @Test
+    public void TC_04_Run_On_Edge() {
         driver = new EdgeDriver();
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         driver.get("https://www.facebook.com/");
