@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-public class Topic_06_WebBrowser_Commands {
+public class Topic_06_WebBrowser_Commands_01 {
 
     // các câu lệnh để thao tác với Browser
     // đứng sau Driver.
