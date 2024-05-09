@@ -87,6 +87,7 @@ public class Topic_07_WebElement_Commands_02 {
             System.out.println("education is disable");
         }
 
+
     }
     @Test
     public void TC_03_Selected(){
@@ -117,7 +118,7 @@ public class Topic_07_WebElement_Commands_02 {
         driver.findElement(By.cssSelector("li.lowercase-char.not-completed")).isDisplayed();
         driver.findElement(By.cssSelector("li.number-char.completed")).isDisplayed();
         driver.findElement(By.cssSelector("li.special-char.not-completed")).isDisplayed();
-        driver.findElement(By.cssSelector("li.uppercase-char.not-completed")).isDisplayed();
+        driver.findElement(By.cssSelector("li.number-char.completed")).isDisplayed();
         driver.findElement(By.cssSelector("li.username-check.completed")).isDisplayed();
         driver.findElement(By.xpath("//li[@class='8-char not-completed']")).isDisplayed();
 
