@@ -10,6 +10,7 @@ import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class Topic_07_WebElement_Commands_02_Practice {
@@ -239,26 +240,123 @@ public class Topic_07_WebElement_Commands_02_Practice {
     }
 
     @Test
-    public void TC_04_verify_Empty_Data() {
+    public void Login_04_verify_Empty_Data() {
         driver.get("http://live.techpanda.org/");
-        driver.findElement(By.cssSelector("//div[@class='footer']//a[@title='My Account']")).click();
+        driver.findElement(By.xpath("//div[@class='footer']//a[@title='My Account']")).click();
+        sleepInSeconds(2);
 
-        driver.findElement(By.cssSelector("input#email")).clear();
-        driver.findElement(By.cssSelector("input#pass")).clear();
+
+        driver.findElement(By.cssSelector("button#send2")).click();
+        Assert.assertEquals(driver.findElement(By.cssSelector("div#advice-required-entry-email")).getText(),"This is a required field.");
+
+        Assert.assertEquals(driver.findElement(By.cssSelector("div#advice-required-entry-pass")).getText(),"This is a required field.");
+
+    }
+    @Test
+    public void Login_05_verify_Invalid_Email() {
+        driver.get("http://live.techpanda.org/");
+        driver.findElement(By.xpath("//div[@class='footer']//a[@title='My Account']")).click();
+        sleepInSeconds(2);
+
+        driver.findElement(By.cssSelector("input#email")).sendKeys("1234@1234");
+        driver.findElement(By.cssSelector("input#pass")).sendKeys("123456");
         driver.findElement(By.cssSelector("button#send2")).click();
 
-        driver.findElement(By.cssSelector("")).isDisplayed();
-        driver.findElement(By.cssSelector("")).isDisplayed();
+        Assert.assertEquals(driver.findElement(By.cssSelector("div#advice-validate-email-email")).getText(),"Please enter a valid email address. For example johndoe@domain.com.");
+
+    }
+    @Test
+    public void Login_06_verify_Pass_Min() {
+        driver.get("http://live.techpanda.org/");
+        driver.findElement(By.xpath("//div[@class='footer']//a[@title='My Account']")).click();
+        sleepInSeconds(2);
+
+        driver.findElement(By.cssSelector("input#email")).sendKeys("automation@gmail.com");
+        driver.findElement(By.cssSelector("input#pass")).sendKeys("123");
+        driver.findElement(By.cssSelector("button#send2")).click();
 
 
+        Assert.assertEquals(driver.findElement(By.cssSelector("div#advice-validate-password-pass")).getText(),"Please enter 6 or more characters without leading or trailing spaces.");
 
+    }
+
+    @Test
+    public void Login_07_verify_Pass_Incorrect() {
+        driver.get("http://live.techpanda.org/");
+        driver.findElement(By.xpath("//div[@class='footer']//a[@title='My Account']")).click();
+        sleepInSeconds(2);
+
+        driver.findElement(By.cssSelector("input#email")).sendKeys("automation@gmail.com");
+        driver.findElement(By.cssSelector("input#pass")).sendKeys("123456789999");
+        driver.findElement(By.cssSelector("button#send2")).click();
+
+        Assert.assertEquals(driver.findElement(By.cssSelector("li.error-msg span")).getText(), "Invalid login or password.");
+        sleepInSeconds(2);
+
+    }
+
+    @Test
+    public void Login_08_Success_verify() {
+        driver.get("http://live.techpanda.org/");
+        driver.findElement(By.xpath("//div[@class='footer']//a[@title='My Account']")).click();
+        sleepInSeconds(2);
+
+        String firstName="Automation", lastName="FC", emailAddress=getEmailAddress(), passWord="123456789";
+        String fullName = firstName + " " + lastName;
+
+        driver.findElement(By.cssSelector("a[title='Create an Account']")).click();
+        driver.findElement(By.cssSelector("input#firstname")).sendKeys(firstName);
+        driver.findElement(By.cssSelector("input#lastname")).sendKeys(lastName);
+        driver.findElement(By.cssSelector("input#email_address")).sendKeys(emailAddress);
+        driver.findElement(By.cssSelector("input#password")).sendKeys(passWord);
+        driver.findElement(By.cssSelector("input#confirmation")).sendKeys(passWord);
+
+        driver.findElement(By.cssSelector("button[title='Register']")).click();
+
+        Assert.assertEquals(driver.findElement(By.cssSelector("li.success-msg span")).getText(),"Thank you for registering with Main Website Store.");
+        Assert.assertEquals(driver.findElement(By.cssSelector("div.welcome-msg strong")).getText(),"Hello, Automation FC!");
+
+        String contactInfo = driver.findElement(By.xpath("//h3[text()='Contact Information']/parent::div/following-sibling::div/p")).getText();
+        Assert.assertTrue(contactInfo.contains(fullName));
+        Assert.assertTrue(contactInfo.contains(emailAddress));
+
+        //logOut
+
+        driver.findElement(By.cssSelector("a.skip-account")).click();
+        sleepInSeconds(2);
+
+        driver.findElement(By.cssSelector("a[title='Log Out']")).click();
+        sleepInSeconds(5);
+
+        driver.findElement(By.xpath("//div[@class='footer']//a[@title='My Account']")).click();
+        sleepInSeconds(2);
+
+        driver.findElement(By.cssSelector("input#email")).sendKeys(emailAddress);
+        driver.findElement(By.cssSelector("input#pass")).sendKeys(passWord);
+        driver.findElement(By.cssSelector("button#send2")).click();
+
+        Assert.assertEquals(driver.findElement(By.cssSelector("div.welcome-msg strong")).getText(),"Hello, Automation FC!");
+
+        contactInfo = driver.findElement(By.xpath("//h3[text()='Contact Information']/parent::div/following-sibling::div/p")).getText();
+        Assert.assertTrue(contactInfo.contains(fullName));
+        Assert.assertTrue(contactInfo.contains(emailAddress));
+
+
+        // verify Account
+        driver.findElement(By.xpath("//a[text()='Account Information']")).click();
+        sleepInSeconds(2);
+
+        Assert.assertEquals(driver.findElement(By.cssSelector("input#firstname")).getAttribute("value"),firstName);
+        Assert.assertEquals(driver.findElement(By.cssSelector("input#lastname")).getAttribute("value"),lastName);
+        Assert.assertEquals(driver.findElement(By.cssSelector("input#email")).getAttribute("value"),emailAddress);
 
     }
 
 
     @AfterClass
-    public void afterClass() {
-        driver.quit();
+    public void afterClass()
+    {
+       driver.quit();
     }
 
     public void sleepInSeconds(long timeInSecond) {
@@ -269,5 +367,9 @@ public class Topic_07_WebElement_Commands_02_Practice {
         }
     }
 
-
+    public String getEmailAddress(){
+        Random rand=new Random();
+        return "Automation" + rand.nextInt(99999)+"@gmail.net";
+    }
 }
+
