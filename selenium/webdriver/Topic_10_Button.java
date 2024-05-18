@@ -3,17 +3,13 @@ package webdriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.openqa.selenium.support.Color; // import color of selenium
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.awt.*;
-import java.util.concurrent.TimeUnit;
-
-public class Topic_10_Button_radio_checkbox {
+public class Topic_10_Button {
     WebDriver driver;
 
 
@@ -23,7 +19,7 @@ public class Topic_10_Button_radio_checkbox {
     }
 
     @Test
-    public void TC_01_() {
+    public void TC_01_Egov_button() {
         driver.get("https://egov.danang.gov.vn/reg");
 
        WebElement registerButton = driver.findElement(By.cssSelector("input.egov-button"));
