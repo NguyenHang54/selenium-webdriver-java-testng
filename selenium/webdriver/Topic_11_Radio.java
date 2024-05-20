@@ -132,6 +132,30 @@ public class Topic_11_Radio {
 
     }
 
+    @Test
+    public void TC_05_custom_Radio_Checkbox() {
+        driver.get("https://docs.google.com/forms/d/e/1FAIpQLSfiypnd69zhuDkjKgqvpID9kwO29UCzeCVrGGtbNPZXQok0jA/viewform");
+
+        By daNangRadio = By.xpath("//div[@aria-label='Đà Nẵng']");
+        // verify radio is selected
+
+        Assert.assertEquals(driver.findElement(daNangRadio).getAttribute("aria-checked"),"false");
+        driver.findElement(daNangRadio).click();
+        sleepInsecond(2);
+        Assert.assertEquals(driver.findElement(daNangRadio).getAttribute("aria-checked"),"true");
+
+        // verify checkbox is selected
+        By quangNgaiCheckbox = By.xpath("//div[@aria-label='Quảng Ngãi']");
+        driver.findElement(quangNgaiCheckbox).click();
+        sleepInsecond(2);
+
+        Assert.assertEquals(driver.findElement(quangNgaiCheckbox).getAttribute("aria-checked"),"true");
+
+    }
+
+
+
+
 @Test
     public void sleepInsecond(long timeInSecond) {
         try {
