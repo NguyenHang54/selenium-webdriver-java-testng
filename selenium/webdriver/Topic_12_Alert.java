@@ -3,7 +3,6 @@ package webdriver;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
@@ -93,17 +92,35 @@ public class Topic_12_Alert {
 
     @Test
     public void TC_04_Authentication_Alert(){
+        String userName ="admin";
+        String passWord = "admin";
+
         // Thu vien alert ko support cho authen dc, lien quan toi security
 
         // cách 1: truyền thẳng user/ pw vào URLz
-        driver.get("http://admin:admin@the-internet.herokuapp.com/basic_auth");
+        //driver.get("http://admin:admin@the-internet.herokuapp.com/basic_auth");
+       // Assert.assertTrue(driver.findElement(By.xpath("//p[contains(text(),'Congratulations! You must have the proper credentials.')]")).isDisplayed());
+
+        // cách 2: Từ page A thao tác lên 1 element, nó sẽ qua page B (cần phải thao tác với Authen Alert trước)
+
+        driver.get("https://the-internet.herokuapp.com/");
+        String authenUrlLink = driver.findElement(By.xpath("//a[text()='Basic Auth']")).getAttribute("href");
+        //System.out.println(authenUrlLink);
+
+        // su dung regex: regular expression: bieu thuc chinh quy
+        //System.out.println(authenArray[0]);
+        //System.out.println(authenArray[1]);
+
+        driver.get(getAuthenAlertUrl(authenUrlLink,userName,passWord));
         Assert.assertTrue(driver.findElement(By.xpath("//p[contains(text(),'Congratulations! You must have the proper credentials.')]")).isDisplayed());
 
-        // cách 2: chỉ sử dụng trên windows( dùng thư viện AutoIT)
+    }
 
-        // cách 3: dùng chrome dev tool Protocol
+    public void TC_05_Authentication_Selenium_4x(){
+
 
     }
+
 
 
 // quit
@@ -111,6 +128,15 @@ public class Topic_12_Alert {
 public void afterClass() {
     driver.quit();
 }
+
+   public String getAuthenAlertUrl(String url, String userName, String passWord){
+       String [] authenArray = url.split("//");
+        return authenArray[0]+"//"+ userName + ":" + passWord + "@" + authenArray[1];
+
+
+   }
+
+
     public void sleepInsecond(long timeInSecond) {
         try {
             Thread.sleep(timeInSecond * 1000);

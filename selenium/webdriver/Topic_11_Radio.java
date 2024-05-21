@@ -5,9 +5,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
+
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -129,6 +131,16 @@ public class Topic_11_Radio {
     @Test
     public void TC_04_custom_ubuntu() {
         driver.get("https://login.ubuntu.com/");
+        driver.findElement(By.xpath("//label[@for='id_new_user']")).click();
+
+        WebElement checboxA = driver.findElement(By.cssSelector("input#id_accept_tos"));
+        ((RemoteWebDriver) driver).executeScript("arguments[0].click();", checboxA);
+
+        //WebElement checkboxA = driver.findElement(By.xpath("//input[@name='accept_tos"));
+
+        sleepInsecond(3);
+
+        Assert.assertTrue(driver.findElement(By.cssSelector("input#id_accept_tos")).isSelected());
 
     }
 
