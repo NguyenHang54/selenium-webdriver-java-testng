@@ -5,6 +5,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.Color;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -38,6 +39,7 @@ public class Topic_13_Actions {
 
     @Test
     public void TC_01_Hover() {
+        // Dung nhieu Hover
         actions.getActiveKeyboard();
         actions.click(driver.findElement(By.xpath(""))).perform();
         actions.click(driver.findElement(By.xpath(""))).build();
@@ -173,6 +175,25 @@ public class Topic_13_Actions {
 
     }
 
+    @Test
+    public void TC_07_drag_And_Drop() {
+        driver.get("https://automationfc.github.io/kendo-drag-drop/");
+
+        // khai bao bien:
+        WebElement smallCircle = driver.findElement(By.cssSelector("div#draggable"));
+        WebElement bigCircle = driver.findElement(By.cssSelector("div#droptarget"));
+        // thuc hien hanh vi keo tha from A to B, perform
+        actions.dragAndDrop(smallCircle, bigCircle)
+                .pause(3000)
+                .perform();
+        sleepInsecond(3);
+
+        // verify text
+        Assert.assertEquals(bigCircle.getText(),"You did great!");
+        // verify color ground
+        Assert.assertEquals(Color.fromString(bigCircle.getCssValue("background-color")).asHex().toLowerCase(),"#03a9f4");
+
+}
 // quit
         @AfterClass
         public void afterClass () {
