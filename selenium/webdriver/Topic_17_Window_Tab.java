@@ -1,8 +1,10 @@
 package webdriver;
 
+import org.bouncycastle.oer.Switch;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.WindowType;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
@@ -88,12 +90,62 @@ public class Topic_17_Window_Tab {
 
         Assert.assertEquals(driver.findElement(By.cssSelector("li.success-msg span")).getText(),"The product Sony Xperia has been added to comparison list.");
 
+        driver.findElement(By.xpath("//a[@title='IPhone']/parent::h2//following-sibling::div[@class='actions']//a[@class='link-compare']")).click();
+        sleepInsecond(2);
+
+        Assert.assertEquals(driver.findElement(By.cssSelector("li.success-msg span")).getText(),"The product IPhone has been added to comparison list.");
+
+        driver.findElement(By.xpath("//a[@title='Samsung Galaxy']/parent::h2//following-sibling::div[@class='actions']//a[@class='link-compare']")).click();
+        sleepInsecond(2);
+
+        Assert.assertEquals(driver.findElement(By.cssSelector("li.success-msg span")).getText(),"The product Samsung Galaxy has been added to comparison list.");
+
+        driver.findElement(By.cssSelector("button[title='Compare'")).click();
+
+        switchtoWindowbyTitle("Products Comparison List - Magento Commerce");
+        sleepInsecond(3);
+
+        Assert.assertEquals(driver.findElement(By.cssSelector("div.page-title>h1")).getText(),"COMPARE PRODUCTS");
+
+        // co 2 cach back ve man hinh chinh: dung switch or clic vao button
+
+        switchtoWindowbyTitle("Mobile");
+
+        driver.findElement(By.cssSelector("input#search")).sendKeys("Samsung Galaxy");
+        sleepInsecond(3);
 
 
     }
 
     @Test
-    public void TC_04_Frame_01() {
+    public void TC_04_Dictionary_window() {
+        driver.get("https://dictionary.cambridge.org/vi/#google_vignette");
+        System.out.println("Driver ID Dic =" +driver.toString());
+        //sleepInsecond(10);
+
+        // tự mở tab or window mới rồi truyền URL vào
+        //WebDriver facebookDriver = driver.switchTo().newWindow(WindowType.TAB);
+        //driver.get("https://www.facebook.com/CUPCambridgeDictionary/");
+        //System.out.println("Driver ID Facebook ="+ facebookDriver.toString());
+
+        //switchtoWindowbyTitle("Cambridge Dictionary | Từ điển tiếng Anh, Bản dịch & Từ điển từ đồng nghĩa");
+        driver.findElement(By.cssSelector("span.cdo-login-button>span")).click();
+        switchtoWindowbyTitle("Login");
+        sleepInsecond(3);
+
+        driver.findElement(By.cssSelector("input[value='Log in']")).click();
+        Assert.assertEquals(driver.findElement(By.cssSelector("span.gigya-error-type-server")).getText(),"This field is required");
+
+        Assert.assertEquals(driver.findElement(By.cssSelector("span.gigya-error-type-server")).getText(),"This field is required");
+        driver.close();
+
+        switchtoWindowbyTitle("Cambridge Dictionary | Từ điển tiếng Anh, Bản dịch & Từ điển từ đồng nghĩa");
+
+        driver.findElement(By.cssSelector("input#searchword")).sendKeys("Automation");
+        driver.findElement(By.xpath("//button[@aria-label='Search']")).click();
+        sleepInsecond(3);
+
+
 
     }
 
@@ -141,6 +193,16 @@ public class Topic_17_Window_Tab {
             }
         }
 
+    }
+
+    public void closeAllWindowWithoutParent(String parentID ){
+        Set<String> allIDs = driver.getWindowHandles();
+        for (String id: allIDs){
+            if(!id.equals(parentID));
+            driver.switchTo().window(id);
+            driver.close();
+        }
+        driver.switchTo().window(parentID);
     }
 }
 
