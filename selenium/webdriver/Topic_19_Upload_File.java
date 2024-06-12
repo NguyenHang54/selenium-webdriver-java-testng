@@ -26,7 +26,7 @@ public class Topic_19_Upload_File {
     // define dấu \\ or / trên window or mac bằng câu lệnh (1 trong 2)
     //Keys character = Platform.getCurrent().is(Platform.WINDOWS) ? Keys.CONTROL: Keys.COMMAND;
    String character = File.separator;
-
+// tạo đường dẫn: path project + \\ or / + folder name + // + file name
     String pic1FilePath = projectPath +character + "uploadFiles"+character + pic1;
     String pic2FilePath = projectPath + character+ "uploadFiles"+character + pic2;
     String pic3FilePath = projectPath + character+ "uploadFiles"+character + pic3;
