@@ -28,7 +28,6 @@ public class Topic_27_Wait_09_Fluent {
     FluentWait<String> fluentString;
 
 
-
     @BeforeClass
     public void beforeClass() {
 
@@ -36,16 +35,17 @@ public class Topic_27_Wait_09_Fluent {
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
 
         // time - default polling time: 0.5s (500 milis)
-        explicitwait = new WebDriverWait(driver,Duration.ofSeconds(10));
+        explicitwait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
         // time- polling: default polling time 0.3s
-        explicitwait = new WebDriverWait(driver,Duration.ofSeconds(10),Duration.ofMillis(300));
+        explicitwait = new WebDriverWait(driver, Duration.ofSeconds(10), Duration.ofMillis(300));
 
         fluentDriver = new FluentWait<WebDriver>(driver);
 
     }
+
     @Test
-    public void TC_01(){
+    public void TC_01() {
         // KHOI TAO
         fluentDriver = new FluentWait<WebDriver>(driver);
         // khai bao element sau do truyen vao() or khai bao truc tiep
@@ -78,7 +78,7 @@ public class Topic_27_Wait_09_Fluent {
 
         fluentDriver.withTimeout(Duration.ofSeconds(10))
                 .pollingEvery(Duration.ofMillis(400))
-                .ignoring(NoSuchElementException.class,TimeoutException.class)
+                .ignoring(NoSuchElementException.class, TimeoutException.class)
                 .until(new Function<WebDriver, Boolean>() {
                     @Override
                     public Boolean apply(WebDriver webDriver) {
@@ -88,8 +88,9 @@ public class Topic_27_Wait_09_Fluent {
 
 
     }
+
     @Test
-    public void TC_02_(){
+    public void TC_02_() {
         driver.get("https://automationfc.github.io/dynamic-loading/");
         driver.findElement(By.cssSelector("div#start>button")).click();
 
@@ -109,7 +110,7 @@ public class Topic_27_Wait_09_Fluent {
         });
 
         // condition: String
-        String helloText= fluentDriver.until(new Function<WebDriver, String>() {
+        String helloText = fluentDriver.until(new Function<WebDriver, String>() {
 
             @Override
             public String apply(WebDriver driver) {
@@ -117,16 +118,16 @@ public class Topic_27_Wait_09_Fluent {
             }
         });
 
-        Assert.assertEquals(helloText,"Hello World!");
+        Assert.assertEquals(helloText, "Hello World!");
 
     }
 
 
     @Test
-    public void TC_03 (){
+    public void TC_03() {
         driver.get("https://automationfc.github.io/fluent-wait/");
 
-        WebElement countDownTime= driver.findElement(By.cssSelector("div#javascript_countdown_time"));
+        WebElement countDownTime = driver.findElement(By.cssSelector("div#javascript_countdown_time"));
 
         fluentElement = new FluentWait<WebElement>(countDownTime);
 
@@ -137,20 +138,18 @@ public class Topic_27_Wait_09_Fluent {
         fluentElement.until(new Function<WebElement, Boolean>() {
             @Override
             public Boolean apply(WebElement webElement) {
-                String text= webElement.getText();
+                String text = webElement.getText();
                 System.out.println(text);
                 return webElement.getText().endsWith("00");
             }
         });
 
-        }
-
-
     }
 
     // quit
-@AfterClass
-public void afterClass() {
-    driver.quit();
+    @AfterClass
+    public void afterClass() {
+        driver.quit();
+    }
 }
-}
+
