@@ -1,0 +1,9 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="UI Web and Mobile Automation" verbose="1" thread-count ="6" >
+
+  <suite-files>
+      <suite-file path="runUIMobileAutomation.xml"/>
+      <suite-file path="runUIWebAutomation.xml"/>
+  </suite-files>
+
+</suite>
